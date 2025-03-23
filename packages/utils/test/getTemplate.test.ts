@@ -8,10 +8,9 @@ import {
   UIOptionsType,
 } from '../src';
 import getTestValidator from './testUtils/getTestValidator';
-import { ComponentType } from 'react';
 import cloneDeep from 'lodash/cloneDeep';
 
-const FakeTemplate: ComponentType<any> = () => null;
+const FakeTemplate = () => null;
 
 const CustomTemplate = () => undefined;
 
