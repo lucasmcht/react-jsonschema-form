@@ -8,10 +8,9 @@ import {
   UIOptionsType,
 } from '../src';
 import getTestValidator from './testUtils/getTestValidator';
-import { ComponentType } from 'react';
 import cloneDeep from 'lodash/cloneDeep';
 
-const FakeTemplate: ComponentType<any> = () => null;
+const FakeTemplate = () => null;
 
 const CustomTemplate = () => undefined;
 
@@ -23,6 +22,7 @@ const registry: Registry = {
   templates: {
     ArrayFieldDescriptionTemplate: FakeTemplate,
     ArrayFieldItemTemplate: FakeTemplate,
+    ArrayFieldItemButtonsTemplate: FakeTemplate,
     ArrayFieldTemplate: FakeTemplate,
     ArrayFieldTitleTemplate: FakeTemplate,
     BaseInputTemplate: FakeTemplate,
@@ -39,6 +39,7 @@ const registry: Registry = {
     FieldErrorTemplate: FakeTemplate,
     FieldHelpTemplate: FakeTemplate,
     FieldTemplate: FakeTemplate,
+    GridTemplate: FakeTemplate,
     ObjectFieldTemplate: FakeTemplate,
     TitleFieldTemplate: FakeTemplate,
     UnsupportedFieldTemplate: FakeTemplate,
@@ -51,6 +52,7 @@ const registry: Registry = {
 const uiOptions: UIOptionsType = {
   ArrayFieldDescriptionTemplate: CustomTemplate as unknown as UIOptionsType['ArrayFieldDescriptionTemplate'],
   ArrayFieldItemTemplate: CustomTemplate as unknown as UIOptionsType['ArrayFieldItemTemplate'],
+  ArrayFieldItemButtonsTemplate: CustomTemplate as unknown as UIOptionsType['ArrayFieldItemButtonsTemplate'],
   ArrayFieldTemplate: CustomTemplate as unknown as UIOptionsType['ArrayFieldTemplate'],
   ArrayFieldTitleTemplate: CustomTemplate as unknown as UIOptionsType['ArrayFieldTitleTemplate'],
   BaseInputTemplate: CustomTemplate as unknown as UIOptionsType['BaseInputTemplate'],
@@ -59,6 +61,7 @@ const uiOptions: UIOptionsType = {
   FieldErrorTemplate: CustomTemplate as unknown as UIOptionsType['FieldErrorTemplate'],
   FieldHelpTemplate: CustomTemplate as unknown as UIOptionsType['FieldHelpTemplate'],
   FieldTemplate: CustomTemplate as unknown as UIOptionsType['FieldTemplate'],
+  GridTemplate: CustomTemplate as unknown as UIOptionsType['GridTemplate'],
   ObjectFieldTemplate: CustomTemplate as unknown as UIOptionsType['ObjectFieldTemplate'],
   TitleFieldTemplate: CustomTemplate as unknown as UIOptionsType['TitleFieldTemplate'],
   UnsupportedFieldTemplate: CustomTemplate as unknown as UIOptionsType['UnsupportedFieldTemplate'],
@@ -73,7 +76,7 @@ describe('getTemplate', () => {
   });
   it('returns the ButtonTemplates from the registry even with uiOptions', () => {
     expect(getTemplate<'ButtonTemplates'>('ButtonTemplates', registry, uiOptions)).toBe(
-      registry.templates.ButtonTemplates
+      registry.templates.ButtonTemplates,
     );
   });
   it('returns the template from registry', () => {
@@ -98,8 +101,8 @@ describe('getTemplate', () => {
           Object.keys(uiOptions).reduce((uiOptions, key) => {
             (uiOptions as Record<string, any>)[key] = key;
             return uiOptions;
-          }, {})
-        )
+          }, {}),
+        ),
       ).toBe(FakeTemplate);
     });
   });
